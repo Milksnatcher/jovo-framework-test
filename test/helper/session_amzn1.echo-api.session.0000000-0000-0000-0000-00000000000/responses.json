@@ -1,0 +1,104 @@
+[
+    {
+        "version": "1.0",
+        "response": {
+            "shouldEndSession": false,
+            "outputSpeech": {
+                "type": "SSML",
+                "ssml": "<speak>Hey?</speak>"
+            },
+            "reprompt": {
+                "outputSpeech": {
+                    "type": "SSML",
+                    "ssml": "<speak>Hello World?</speak>"
+                }
+            }
+        },
+        "sessionAttributes": {
+            "STATE": "TestState"
+        }
+    },
+    {
+        "version": "1.0",
+        "response": {
+            "shouldEndSession": false,
+            "outputSpeech": {
+                "type": "SSML",
+                "ssml": "<speak>Hello World?</speak>"
+            },
+            "reprompt": {
+                "outputSpeech": {
+                    "type": "SSML",
+                    "ssml": "<speak>Hello World?</speak>"
+                }
+            }
+        },
+        "sessionAttributes": {
+            "STATE": "TestState"
+        }
+    },
+    {
+        "version": "1.0",
+        "response": {
+            "shouldEndSession": true,
+            "outputSpeech": {
+                "type": "SSML",
+                "ssml": "<speak>YES</speak>"
+            }
+        },
+        "sessionAttributes": {
+            "STATE": "TestState"
+        }
+    },
+    {
+        "version": "1.0",
+        "response": {
+            "shouldEndSession": false,
+            "outputSpeech": {
+                "type": "SSML",
+                "ssml": "<speak>Good Morning?</speak>"
+            },
+            "reprompt": {
+                "outputSpeech": {
+                    "type": "SSML",
+                    "ssml": "<speak>Hello World?</speak>"
+                }
+            }
+        },
+        "sessionAttributes": {
+            "STATE": "TestState"
+        }
+    },
+    {
+        "version": "1.0",
+        "response": {
+            "shouldEndSession": false,
+            "outputSpeech": {
+                "type": "SSML",
+                "ssml": "<speak>Hello World?</speak>"
+            },
+            "reprompt": {
+                "outputSpeech": {
+                    "type": "SSML",
+                    "ssml": "<speak>Hello World?</speak>"
+                }
+            }
+        },
+        "sessionAttributes": {
+            "STATE": "TestState"
+        }
+    },
+    {
+        "version": "1.0",
+        "response": {
+            "shouldEndSession": true,
+            "outputSpeech": {
+                "type": "SSML",
+                "ssml": "<speak>YES</speak>"
+            }
+        },
+        "sessionAttributes": {
+            "STATE": "TestState"
+        }
+    }
+]
