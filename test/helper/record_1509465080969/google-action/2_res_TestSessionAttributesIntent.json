@@ -1,0 +1,41 @@
+{
+    "speech": "<speak>I'm in a state.</speak>",
+    "data": {
+        "google": {
+            "expectUserResponse": false,
+            "richResponse": {
+                "items": [
+                    {
+                        "simpleResponse": {
+                            "ssml": "<speak>I'm in a state.</speak>"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "contextOut": [
+        {
+            "name": "session",
+            "lifespan": 100,
+            "parameters": {
+                "STATE": "TestSessionAttributesState"
+            }
+        },
+        {
+            "name": "actions_capability_screen_output",
+            "parameters": {},
+            "lifespan": 0
+        },
+        {
+            "name": "actions_capability_audio_output",
+            "parameters": {},
+            "lifespan": 0
+        },
+        {
+            "name": "google_assistant_input_type_keyboard",
+            "parameters": {},
+            "lifespan": 0
+        }
+    ]
+}
