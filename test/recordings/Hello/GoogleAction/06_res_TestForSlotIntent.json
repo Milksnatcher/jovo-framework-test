@@ -1,0 +1,34 @@
+{
+    "speech": "<speak>Hey John!</speak>",
+    "data": {
+        "google": {
+            "expectUserResponse": false,
+            "richResponse": {
+                "items": [
+                    {
+                        "simpleResponse": {
+                            "ssml": "<speak>Hey John!</speak>"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "contextOut": [
+        {
+            "name": "actions_capability_screen_output",
+            "parameters": {},
+            "lifespan": 0
+        },
+        {
+            "name": "actions_capability_audio_output",
+            "parameters": {},
+            "lifespan": 0
+        },
+        {
+            "name": "google_assistant_input_type_keyboard",
+            "parameters": {},
+            "lifespan": 0
+        }
+    ]
+}

@@ -39,7 +39,7 @@
                 },
                 "conversation": {
                     "conversationId": "1509465080969",
-                    "type": "NEW",
+                    "type": "ACTIVE",
                     "conversationToken": "[]"
                 },
                 "availableSurfaces": [
@@ -70,7 +70,9 @@
                 {
                     "name": "session",
                     "lifespan": 1000,
-                    "parameters": {}
+                    "parameters": {
+                        "STATE": "TestSessionAttributesState"
+                    }
                 },
                 {
                     "name": "actions_capability_screen_output",
@@ -93,7 +95,7 @@
                 "webhookUsed": "true",
                 "webhookForSlotFillingUsed": "false",
                 "nluResponseTime": 4,
-                "intentName": "HelpIntent"
+                "intentName": "TestSessionAttributesIntent"
             },
             "fulfillment": {
                 "speech": "",
@@ -151,7 +153,7 @@
             },
             "conversation": {
                 "conversationId": "1509465080969",
-                "type": "NEW",
+                "type": "ACTIVE",
                 "conversationToken": "[]"
             },
             "availableSurfaces": [
@@ -182,7 +184,9 @@
             {
                 "name": "session",
                 "lifespan": 1000,
-                "parameters": {}
+                "parameters": {
+                    "STATE": "TestSessionAttributesState"
+                }
             },
             {
                 "name": "actions_capability_screen_output",
@@ -205,7 +209,7 @@
             "webhookUsed": "true",
             "webhookForSlotFillingUsed": "false",
             "nluResponseTime": 4,
-            "intentName": "HelpIntent"
+            "intentName": "TestSessionAttributesIntent"
         },
         "fulfillment": {
             "speech": "",

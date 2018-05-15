@@ -39,7 +39,7 @@
                 },
                 "conversation": {
                     "conversationId": "1509465080969",
-                    "type": "NEW",
+                    "type": "ACTIVE",
                     "conversationToken": "[]"
                 },
                 "availableSurfaces": [
@@ -67,11 +67,6 @@
             "actionIncomplete": false,
             "parameters": {},
             "contexts": [
-                {
-                    "name": "session",
-                    "lifespan": 1000,
-                    "parameters": {}
-                },
                 {
                     "name": "actions_capability_screen_output",
                     "parameters": {},
@@ -151,7 +146,7 @@
             },
             "conversation": {
                 "conversationId": "1509465080969",
-                "type": "NEW",
+                "type": "ACTIVE",
                 "conversationToken": "[]"
             },
             "availableSurfaces": [
@@ -179,11 +174,6 @@
         "actionIncomplete": false,
         "parameters": {},
         "contexts": [
-            {
-                "name": "session",
-                "lifespan": 1000,
-                "parameters": {}
-            },
             {
                 "name": "actions_capability_screen_output",
                 "parameters": {},

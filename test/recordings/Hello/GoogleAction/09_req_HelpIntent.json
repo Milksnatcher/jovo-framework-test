@@ -68,11 +68,6 @@
             "parameters": {},
             "contexts": [
                 {
-                    "name": "session",
-                    "lifespan": 1000,
-                    "parameters": {}
-                },
-                {
                     "name": "actions_capability_screen_output",
                     "parameters": {},
                     "lifespan": 0
@@ -179,11 +174,6 @@
         "actionIncomplete": false,
         "parameters": {},
         "contexts": [
-            {
-                "name": "session",
-                "lifespan": 1000,
-                "parameters": {}
-            },
             {
                 "name": "actions_capability_screen_output",
                 "parameters": {},

@@ -1,5 +1,5 @@
 {
-    "speech": "<speak>I'm happy to help you.</speak>",
+    "speech": "<speak>I'm in a state.</speak>",
     "data": {
         "google": {
             "expectUserResponse": false,
@@ -7,7 +7,7 @@
                 "items": [
                     {
                         "simpleResponse": {
-                            "ssml": "<speak>I'm happy to help you.</speak>"
+                            "ssml": "<speak>I'm in a state.</speak>"
                         }
                     }
                 ]
@@ -18,7 +18,9 @@
         {
             "name": "session",
             "lifespan": 1000,
-            "parameters": {}
+            "parameters": {
+                "STATE": "TestSessionAttributesState"
+            }
         },
         {
             "name": "actions_capability_screen_output",

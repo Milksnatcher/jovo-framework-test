@@ -39,7 +39,7 @@
                 },
                 "conversation": {
                     "conversationId": "1509465080969",
-                    "type": "ACTIVE",
+                    "type": "NEW",
                     "conversationToken": "[]"
                 },
                 "availableSurfaces": [
@@ -68,13 +68,6 @@
             "parameters": {},
             "contexts": [
                 {
-                    "name": "session",
-                    "lifespan": 100,
-                    "parameters": {
-                        "STATE": "TestSessionAttributesState"
-                    }
-                },
-                {
                     "name": "actions_capability_screen_output",
                     "parameters": {},
                     "lifespan": 0
@@ -95,7 +88,7 @@
                 "webhookUsed": "true",
                 "webhookForSlotFillingUsed": "false",
                 "nluResponseTime": 4,
-                "intentName": "TestSessionAttributesIntent"
+                "intentName": "HelpIntent"
             },
             "fulfillment": {
                 "speech": "",
@@ -153,7 +146,7 @@
             },
             "conversation": {
                 "conversationId": "1509465080969",
-                "type": "ACTIVE",
+                "type": "NEW",
                 "conversationToken": "[]"
             },
             "availableSurfaces": [
@@ -182,13 +175,6 @@
         "parameters": {},
         "contexts": [
             {
-                "name": "session",
-                "lifespan": 100,
-                "parameters": {
-                    "STATE": "TestSessionAttributesState"
-                }
-            },
-            {
                 "name": "actions_capability_screen_output",
                 "parameters": {},
                 "lifespan": 0
@@ -209,7 +195,7 @@
             "webhookUsed": "true",
             "webhookForSlotFillingUsed": "false",
             "nluResponseTime": 4,
-            "intentName": "TestSessionAttributesIntent"
+            "intentName": "HelpIntent"
         },
         "fulfillment": {
             "speech": "",

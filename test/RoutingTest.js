@@ -8,7 +8,7 @@
 // Configuration
 const {app} = require('../app/app');
 const expect = require('chai').expect;
-const {alexaRequestBuilder, googleActionRequestBuilder, send, addUserData, addUser, removeUserData, removeUser, getUserData, removeSessionAttributes, setDbPath} = require('jovo-framework').Jester;
+const {alexaRequestBuilder, googleActionRequestBuilder, send, addUserData, addUser, removeUserData, removeUser, getUserData, removeSessionAttributes, setDbPath} = require('jovo-framework').TestSuite;
 setDbPath(app.config.db.localDbFilename);
 
 describe('REQUEST', function () {
@@ -73,9 +73,9 @@ describe('REQUEST', function () {
                 expect(req.getUserId()).to.equal('1234');
             });
             it('should take an own request object for ' + requestBuilder.type(), function (done) {
-                send(require('./helper/record_1509465080969/google-action/1_req_HelpIntent'))
+                send(require('./recordings/Hello/AlexaSkill/01_req_LAUNCH'))
                     .then((res) => {
-                        expect(res.isTell('I\'m happy to help you.')).to.equal(true);
+                        expect(res.isAsk(['Hey?', 'Hello?', 'Good Morning?'], 'Hello World?')).to.equal(true);
                         done();
                     })
             });
@@ -98,17 +98,17 @@ describe('REQUEST', function () {
         for (let requestBuilder of [alexaRequestBuilder]) {
             describe('AUDIO', function () {
                 it('should successfully send an AudioPlayer directive for ' + requestBuilder.type(), function (done) {
-                    send(requestBuilder.audio())
+                    send(requestBuilder.audioPlayerRequest())
                         .then((res) => {
                             expect(res.getShouldEndSession()).to.equal(true);
                             done();
                         });
                 });
                 it('should successfully change the default directive for ' + requestBuilder.type(), function (done) {
-                    send(requestBuilder.audio('PlaybackStopped'))
+                    send(requestBuilder.audioPlayerRequest('PlaybackStopped'))
                         .then((res) => {
                             expect(res.getShouldEndSession()).to.equal(true);
-                            send(requestBuilder.audio().setType('AudioPlayer.PlaybackStopped'))
+                            send(requestBuilder.audioPlayerRequest().setType('AudioPlayer.PlaybackStopped'))
                                 .then((res) => {
                                     expect(res.getShouldEndSession()).to.equal(true);
                                     done();
@@ -123,16 +123,49 @@ describe('REQUEST', function () {
                         })
                 })
             });
-            describe.only('ERROR', function () {
+            describe('ERROR', function () {
                 it('should send an error for ' + requestBuilder.type(), function(done) {
                     send(requestBuilder.error())
                         .then((res) => {
+                            expect(res.isTell('Session ended.')).to.equal(true);
                             done();
                         })
                 })
             });
+            describe('SKIL EVENT REQUEST', function() {
+                it('should just send a default skill event request for ' + requestBuilder.type(), function(done) {
+                    send(requestBuilder.skillEventRequest())
+                        .then((res) => {
+                            //expect(res.isTell('Skill Event fired!')).to.equal(true);
+                            done();
+                        })
+                })
+            });
+            describe('DISPLAY REQUEST', function() {
+                it('should just send a default display request for ' + requestBuilder.type(), function(done) {
+                    send(requestBuilder.displayRequest())
+                        .then((res) => {
+                            done();
+                        })
+                })
+            })
         }
     });
+});
+
+describe('USER DATA', function() {
+    describe('ADD USER DATA', function() {
+        it('should add user data and get it successfully', function() {
+            addUserData('1234', 'key', 'value');
+            expect(getUserData('1234', 'key') === 'value').to.equal(true);
+            removeUser();
+        });
+        it('should add multiple users without altering data for other users', function() {
+            addUserData('1234', 'key', 'value');
+            addUserData('123');
+            expect(getUserData('123', 'hello') === undefined).to.equal(true);
+        })
+    })
 });
 
 describe('RESPONSE', function () {
