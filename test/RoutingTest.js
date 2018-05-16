@@ -8,12 +8,13 @@
 // Configuration
 const {app} = require('../app/app');
 const expect = require('chai').expect;
-const {alexaRequestBuilder, googleActionRequestBuilder, send, addUserData, addUser, removeUserData, removeUser, getUserData, removeSessionAttributes, setDbPath} = require('jovo-framework').TestSuite;
+const getPlatformRequestBuilder = require('jovo-framework').util.getPlatformRequestBuilder;
+const {send, addUserData, addUser, removeUserData, removeUser, getUserData, removeSessionAttributes, setDbPath} = require('jovo-framework').TestSuite;
 setDbPath(app.config.db.localDbFilename);
 
 describe('REQUEST', function () {
     describe('LAUNCH', function () {
-        for (let requestBuilder of [alexaRequestBuilder, googleActionRequestBuilder]) {
+        for (let requestBuilder of getPlatformRequestBuilder('GoogleActionDialogFlow', 'AlexaSkill')) {
             it('should jump into LaunchIntent for ' + requestBuilder.type(), function (done) {
                 send(requestBuilder.launch())
                     .then((res) => {
@@ -25,9 +26,17 @@ describe('REQUEST', function () {
     });
 
     describe('INTENT', function () {
-        for (let requestBuilder of [alexaRequestBuilder, googleActionRequestBuilder]) {
+        for (let requestBuilder of getPlatformRequestBuilder('GoogleActionDialogFlow', 'AlexaSkill')) {
             it('should send a default intent for ' + requestBuilder.type(), function (done) {
                 send(requestBuilder.intent())
+                    .then((res) => {
+                        expect(res.isTell('I\'m happy to help you.')).to.equal(true);
+                        done();
+                    })
+            });
+            it('should save the launch intent in a variable for later usage for ' + requestBuilder.type(), function(done) {
+                let intent = requestBuilder.intent();
+                send(intent)
                     .then((res) => {
                         expect(res.isTell('I\'m happy to help you.')).to.equal(true);
                         done();
@@ -39,6 +48,7 @@ describe('REQUEST', function () {
                         expect(res.isTell('Hey John!')).to.equal(true);
                         done();
                     });
+
             });
             it('should successfully change the intent name and add slots by calling the respective functions for ' + requestBuilder.type(), function (done) {
                 send(requestBuilder.intent().setIntentName('TestForSlotIntent').addInput('name', 'John'))
@@ -54,15 +64,23 @@ describe('REQUEST', function () {
                         done();
                     });
             });
-            it('should set state for ' + googleActionRequestBuilder.type(), function (done) {
-                send(googleActionRequestBuilder.intent('TestSessionAttributesIntent').setState('TestSessionAttributesState'))
+            it('should delete all session attributes, if the session is new for ' + requestBuilder.type(), function(done) {
+                send(requestBuilder.intent('TestSessionAttributesIntent').setState('TestSessionAttributesState'))
+                    .then(() => send(requestBuilder.launch()))
+                    .then((res) => {
+                        expect(res.hasSessionAttributes()).to.equal(false);
+                        done();
+                    })
+            });
+            it('should set state for ' + requestBuilder.type(), function (done) {
+                send(requestBuilder.intent('TestSessionAttributesIntent').setState('TestSessionAttributesState'))
                     .then((res) => {
                         expect(res.isTell('I\'m in a state.')).to.equal(true);
                         done();
                     });
             });
-            it('should check, if session is new for ' + googleActionRequestBuilder.type(), function (done) {
-                send(googleActionRequestBuilder.intent().setSessionNew())
+            it('should check, if session is new for ' + requestBuilder.type(), function (done) {
+                send(requestBuilder.intent().setSessionNew())
                     .then((res) => {
                         expect(getUserData(requestBuilder.intent().getUserId(), 'new')).to.equal(true);
                         done();
@@ -83,7 +101,7 @@ describe('REQUEST', function () {
     });
 
     describe('END', function () {
-        for (let requestBuilder of [alexaRequestBuilder, googleActionRequestBuilder]) {
+        for (let requestBuilder of getPlatformRequestBuilder('GoogleActionDialogFlow', 'AlexaSkill')) {
             it('should send an EndRequest for ' + requestBuilder.type(), function (done) {
                 send(requestBuilder.end())
                     .then((res) => {
@@ -95,7 +113,7 @@ describe('REQUEST', function () {
     });
 
     describe('ALEXA SPECIFICS', function () {
-        for (let requestBuilder of [alexaRequestBuilder]) {
+        for (let requestBuilder of getPlatformRequestBuilder('AlexaSkill')) {
             describe('AUDIO', function () {
                 it('should successfully send an AudioPlayer directive for ' + requestBuilder.type(), function (done) {
                     send(requestBuilder.audioPlayerRequest())
@@ -104,7 +122,7 @@ describe('REQUEST', function () {
                             done();
                         });
                 });
-                it('should successfully change the default directive for ' + requestBuilder.type(), function (done) {
+                it.skip('should successfully change the default directive for ' + requestBuilder.type(), function (done) {
                     send(requestBuilder.audioPlayerRequest('PlaybackStopped'))
                         .then((res) => {
                             expect(res.getShouldEndSession()).to.equal(true);
@@ -125,14 +143,14 @@ describe('REQUEST', function () {
             });
             describe('ERROR', function () {
                 it('should send an error for ' + requestBuilder.type(), function(done) {
-                    send(requestBuilder.error())
+                    send(requestBuilder.errorRequest())
                         .then((res) => {
                             expect(res.isTell('Session ended.')).to.equal(true);
                             done();
                         })
                 })
             });
-            describe('SKIL EVENT REQUEST', function() {
+            describe('SKILL EVENT REQUEST', function() {
                 it('should just send a default skill event request for ' + requestBuilder.type(), function(done) {
                     send(requestBuilder.skillEventRequest())
                         .then((res) => {
@@ -170,7 +188,7 @@ describe('USER DATA', function() {
 
 describe('RESPONSE', function () {
     describe('Session Attributes', function () {
-        for (let requestBuilder of [alexaRequestBuilder, googleActionRequestBuilder]) {
+        for (let requestBuilder of getPlatformRequestBuilder('GoogleActionDialogFlow', 'AlexaSkill')) {
             it('should include session attribute in response for ' + requestBuilder.type(), function (done) {
                 send(requestBuilder.intent('TestSessionAttributesIntent'))
                     .then((res) => {
