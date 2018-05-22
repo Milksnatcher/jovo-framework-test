@@ -7,7 +7,7 @@
     "child_process": "^1.0.2",
     "fs": "^0.0.1-security",
     "gs": "^0.0.2",
-    "jovo-framework": "^1.0.0",
+    "jovo-framework": "^1.2.0",
     "lodash": "^4.17.10",
     "request": "^2.85.0"
   },

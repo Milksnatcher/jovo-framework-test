@@ -209,6 +209,10 @@ diff@3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-3.5.0.tgz#800c0dd1e0a8bfbc95835c202ad220fe317e5a12"
 
+dotenv@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
+
 ecc-jsbn@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.1.tgz#0fc73a9ed5f0d53c38193398523ef7e543777505"
@@ -452,16 +456,18 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
-jovo-framework@^1.0.0:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/jovo-framework/-/jovo-framework-1.1.5.tgz#35cdad6b54b230420e9bd3ced25adf08c74d77ea"
+jovo-framework@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/jovo-framework/-/jovo-framework-1.2.0.tgz#cfb4627c97e1518e9c368a2666e2835aeef2cd82"
   dependencies:
     body-parser "^1.17.2"
+    dotenv "^5.0.1"
     express "^4.15.3"
     i18next "^8.4.3"
     i18next-sprintf-postprocessor "^0.2.2"
     lodash "^4.17.4"
     uuid "^3.1.0"
+    xml-escape "^1.1.0"
 
 jsbn@~0.1.0:
   version "0.1.1"
@@ -784,3 +790,7 @@ verror@1.10.0:
 wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
+
+xml-escape@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/xml-escape/-/xml-escape-1.1.0.tgz#3904c143fa8eb3a0030ec646d2902a2f1b706c44"
