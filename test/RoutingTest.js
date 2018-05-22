@@ -187,10 +187,12 @@ describe('USER DATA', function () {
                 let req = rb.intent().setUserId('1234');
                 expect(req.getUserId()).to.equal('1234');
             });
-            it('should send an intent with a set user id for ' + rb.type(), function(done) {
+            it.only('should send an intent with a set user id for ' + rb.type(), function(done) {
                 let req = rb.intent().setUserId('1234');
                 send(req)
                     .then((res) => {
+                        expect(getUserData('1234')).to.not.be.undefined;
+                        expect(getUserData('123')).to.be.undefined;
                         done();
                     });
             });
