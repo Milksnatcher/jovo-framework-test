@@ -60,7 +60,7 @@ app.setHandler({
 
     'TestSessionAttributesState': {
         'TestSessionAttributesIntent': function () {
-            this.tell('I\'m in a state.');
+            this.ask('Am I in a state?');
         },
         'Unhandled': function() {
             this.tell('Unhandled in a state.');

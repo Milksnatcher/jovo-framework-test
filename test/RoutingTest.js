@@ -14,7 +14,7 @@ setDbPath(app.config.db.localDbFilename);
 
 describe('REQUEST', function () {
     describe('LAUNCH', function () {
-        for (let rb of getPlatformRequestBuilder('GoogleActionDialogFlow', 'AlexaSkill')) {
+        for (let rb of getPlatformRequestBuilder()) {
             it('should jump into LaunchIntent for ' + rb.type(), function (done) {
                 send(rb.launch())
                     .then((res) => {
@@ -26,7 +26,7 @@ describe('REQUEST', function () {
     });
 
     describe('INTENT', function () {
-        for (let rb of getPlatformRequestBuilder('GoogleActionDialogFlow', 'AlexaSkill')) {
+        for (let rb of getPlatformRequestBuilder()) {
             it('should send a default intent for ' + rb.type(), function (done) {
                 send(rb.intent())
                     .then((res) => {
@@ -60,7 +60,7 @@ describe('REQUEST', function () {
             it('should set session attribute for ' + rb.type(), function (done) {
                 send(rb.intent('TestSessionAttributesIntent').setSessionAttribute('STATE', 'TestSessionAttributesState'))
                     .then((res) => {
-                        expect(res.isTell('I\'m in a state.')).to.equal(true);
+                        expect(res.isAsk('Am I in a state?')).to.equal(true);
                         done();
                     });
             });
@@ -75,7 +75,7 @@ describe('REQUEST', function () {
             it('should set state for ' + rb.type(), function (done) {
                 send(rb.intent('TestSessionAttributesIntent').setState('TestSessionAttributesState'))
                     .then((res) => {
-                        expect(res.isTell('I\'m in a state.')).to.equal(true);
+                        expect(res.isAsk('Am I in a state?')).to.equal(true);
                         done();
                     });
             });
@@ -86,7 +86,7 @@ describe('REQUEST', function () {
                         done();
                     });
             });
-            it('should take an own request object for ' + rb.type(), function (done) {
+            it.skip('should take an own request object for ' + rb.type(), function (done) {
                 send(require('./recordings/Hello/AlexaSkill/01_req_LAUNCH'))
                     .then((res) => {
                         expect(res.isAsk(['Hey?', 'Hello?', 'Good Morning?'], 'Hello World?')).to.equal(true);
@@ -97,7 +97,7 @@ describe('REQUEST', function () {
     });
 
     describe('END', function () {
-        for (let rb of getPlatformRequestBuilder('GoogleActionDialogFlow', 'AlexaSkill')) {
+        for (let rb of getPlatformRequestBuilder()) {
             it('should send an EndRequest for ' + rb.type(), function (done) {
                 send(rb.end())
                     .then((res) => {
@@ -118,15 +118,11 @@ describe('REQUEST', function () {
                             done();
                         });
                 });
-                it.skip('should successfully change the default directive for ' + rb.type(), function (done) {
-                    send(rb.audioPlayerRequest('PlaybackStopped'))
+                it('should successfully change the default directive for ' + rb.type(), function (done) {
+                    send(rb.audioPlayerRequest('AudioPlayer.PlaybackStopped'))
                         .then((res) => {
                             expect(res.getShouldEndSession()).to.equal(true);
-                            send(rb.audioPlayerRequest().setType('AudioPlayer.PlaybackStopped'))
-                                .then((res) => {
-                                    expect(res.getShouldEndSession()).to.equal(true);
-                                    done();
-                                });
+                            done();
                         })
                 });
                 it('should send a StopIntent for ' + rb.type(), function (done) {
@@ -175,22 +171,24 @@ describe('USER DATA', function () {
             removeUser();
         });
         it('should add multiple users without altering data for other users', function () {
+            addUserData('123', 'data', 'data');
             addUserData('1234', 'key', 'value');
-            addUserData('123');
-            expect(getUserData('123', 'hello') === undefined).to.equal(true);
+            expect(getUserData('123', 'key')).to.be.undefined;
         })
     });
 
     describe('USER_ID', function () {
-        for (let rb of getPlatformRequestBuilder('AlexaSkill', 'GoogleActionDialogFlow')) {
-            it('should set user id for ' + rb.type(), function () {
+        for (let rb of getPlatformRequestBuilder()) {
+            it('should set user id for ' + rb.type(), function() {
                 let req = rb.intent().setUserId('1234');
                 expect(req.getUserId()).to.equal('1234');
             });
-            it.only('should send an intent with a set user id for ' + rb.type(), function(done) {
+            it('should send an intent with a set user id for ' + rb.type(), function(done) {
+                removeUser();
                 let req = rb.intent().setUserId('1234');
+                addUserData('1234', 'key', 'value');
                 send(req)
-                    .then((res) => {
+                    .then(() => {
                         expect(getUserData('1234')).to.not.be.undefined;
                         expect(getUserData('123')).to.be.undefined;
                         done();
@@ -202,7 +200,7 @@ describe('USER DATA', function () {
 
 describe('RESPONSE', function () {
     describe('Session Attributes', function () {
-        for (let rb of getPlatformRequestBuilder('GoogleActionDialogFlow', 'AlexaSkill')) {
+        for (let rb of getPlatformRequestBuilder()) {
             it('should include session attribute in response for ' + rb.type(), function (done) {
                 send(rb.intent('TestSessionAttributesIntent'))
                     .then((res) => {
